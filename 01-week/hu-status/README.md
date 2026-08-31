@@ -5,7 +5,7 @@
 # Weekly Status - Week 01
 
 <!-- CONFIG-START - must match your profile repo (username/username) CONFIG -->
-- FULL_NAME:
+- FULL_NAME: Carolay
 - GITHUB_USER:
 - TEAM:
 - SPRINT_GOAL:
