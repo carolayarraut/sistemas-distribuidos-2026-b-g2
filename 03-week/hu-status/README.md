@@ -6,30 +6,30 @@
 - FULL_NAME: Carolay Arraut Heredia
 - GITHUB_USER: carolayarraut
 - TEAM: BarberSaaS Team
-- SPRINT_GOAL: Presentar los avances del proyecto BarberSaaS, analizar los fundamentos de la arquitectura de microservicios y documentar los diagramas de la sesión 03.
+- SPRINT_GOAL: Present BarberSaaS project progress updates, analyze microservices architecture fundamentals, and document Week 03 diagrams.
 <!-- CONFIG-END -->
 
 ## 1. User stories worked this week
 
 | HU ID | Title | Status (todo/doing/done) | Evidence (PR or commit URL) |
 | --- | --- | --- | --- |
-| HU-BAR-005 | Presentación de avances del proyecto y revisión de requerimientos | done | [Commit Link](https://github.com/carolayarraut/sistemas-distribuidos-2026-b-g2/tree/main/03-week/hu-status) |
-| HU-BAR-006 | Análisis de microservicios e integración del diagrama de la Sesión 3 | done | [Diagrama Sesión 3](https://github.com/carolayarraut/sistemas-distribuidos-2026-b-g2/blob/main/03-week/hu-status/SESION3.png) |
+| HU-BAR-005 | Project progress presentation and requirements review | done | [Commit Link](https://github.com/carolayarraut/sistemas-distribuidos-2026-b-g2/tree/main/03-week/hu-status) |
+| HU-BAR-006 | Microservices analysis and integration of Week 3 diagram | done | [Week 3 Diagram](https://github.com/carolayarraut/sistemas-distribuidos-2026-b-g2/blob/main/03-week/hu-status/semana%203.jpeg) |
 
 ## 2. My individual contribution
 
-- Exposición del estado actual del proyecto BarberSaaS y revisión de avances con el equipo.
-- Análisis de la arquitectura de microservicios: descomposición de componentes y estrategia de integración.
-- Subida e integración de la imagen con las notas e ilustraciones conceptuales de la sesión 3 (`SESION3.png`).
+- Presented current progress of the BarberSaaS project and conducted a team review session.
+- Participated in microservices architecture analysis: component decomposition and integration strategy.
+- Uploaded and integrated the notes and conceptual illustration image for Week 03 (`semana 3.jpeg`).
 
 ## 3. Blockers and risks
 
-- Ninguno por el momento. La presentación de avances y la documentación gráfica de la Semana 03 se completaron con éxito.
+- None at the moment. Deliverable presentation and documentation for Week 03 were completed successfully.
 
 ## 4. Plan for next week
 
-- Definir patrones de comunicación síncrona y asíncrona entre los microservicios definidos.
-- Continuar con el modelado de dominio aplicando Arquitectura Hexagonal y DDD.
+- Define synchronous and asynchronous communication patterns across microservices.
+- Continue domain modeling following Hexagonal Architecture and DDD principles.
 
 ## 5. Compliance self-check
 
@@ -42,5 +42,5 @@
 
 ## 6. Evidence links
 
-- [Diagrama de la Sesión 3 (SESION3.png)](https://github.com/carolayarraut/sistemas-distribuidos-2026-b-g2/blob/main/03-week/hu-status/SESION3.png)
-- [Carpeta HU Status Semana 03](https://github.com/carolayarraut/sistemas-distribuidos-2026-b-g2/tree/main/03-week/hu-status)
+- [Week 3 Diagram (semana 3.jpeg)](https://github.com/carolayarraut/sistemas-distribuidos-2026-b-g2/blob/main/03-week/hu-status/semana%203.jpeg)
+- [Week 03 HU Status Folder](https://github.com/carolayarraut/sistemas-distribuidos-2026-b-g2/tree/main/03-week/hu-status)
