@@ -41,5 +41,6 @@
 
 ## 6. Evidence links
 
-- [Documento Dominios Transversales](https://github.com/carolayarraut/sistemas-distribuidos-2026-b-g2/blob/main/05-week/hu-status/Dominios_tranversales_Carolay_Arraut_Heredia.docx)
+- [Documento Dominios Transversales](https://github.com/carolayarraut/sistemas-distribuidos-2026-b-g2/blob/main/05-week/hu-status/Dominios_transversales_Carolay_Arraut_Heredia.docx)
+
 
