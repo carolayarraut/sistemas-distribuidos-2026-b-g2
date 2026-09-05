@@ -41,4 +41,4 @@
 
 ## 6. Evidence links
 
-- [Week 05 HU Status Folder](https://github.com/carolayarraut/sistemas-distribuidos-2026-b-g2/tree/main/05-week/hu-status)
+- [Week 05 HU Status Folder](https://github.com/carolayarraut/sistemas-distribuidos-2026-b-g2/tree/main/05-week/hu-status/Dominios_tranversales_Carolay_Arraut_Heredia%)
