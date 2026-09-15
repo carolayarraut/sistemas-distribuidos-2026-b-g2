@@ -37,4 +37,4 @@
 
 ## 6. Evidence links
 
-- Session 1 class notes and project domain review.
+- [Session 1 Class Notes (Image)](./Sesion%201-Resumen%20clase.JPG)
