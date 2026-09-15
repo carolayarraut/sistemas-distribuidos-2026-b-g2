@@ -36,6 +36,7 @@
 - [x] DDD / hexagonal boundaries respected (domain has no I/O)
 - [x] No secrets; config via environment variables: Confirmed that configuration relies on environment variables rather than hardcoded credentials.
 
+
 ## 6. Evidence links
 
-- [Local Testing Evidence (Image)](https://github.com/carolayarraut/sistemas-distribuidos-2026-b-g2/blob/main/06-week/week%206.jpg)
+- Resumen (Image)](./week%206.jpg)
