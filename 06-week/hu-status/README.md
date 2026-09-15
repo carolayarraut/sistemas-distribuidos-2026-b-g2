@@ -36,7 +36,6 @@
 - [x] DDD / hexagonal boundaries respected (domain has no I/O)
 - [x] No secrets; config via environment variables: Confirmed that configuration relies on environment variables rather than hardcoded credentials.
 
-
 ## 6. Evidence links
 
-- Resumen (Image)](./week%206.jpg)
+- [Resumen (Image)](./week%206.jpg)
