@@ -1,3 +1,7 @@
+<!-- HU-STATUS TEMPLATE - do NOT remove the <!-- ... --> markers or the table headers. Your weekly grade is read AUTOMATICALLY from this file: 04-week/hu-status/README.md  (inside YOUR fork). English. -->
+
+# Weekly Status - Week 06
+
 <!-- CONFIG-START - must match your profile repo (username/username) CONFIG -->
 - FULL_NAME: Carolay Arraut Heredia
 - GITHUB_USER: carolayarraut
