@@ -15,11 +15,13 @@
 | --- | --- | --- | --- |
 | HU-BAR-014 | Review of first term summary and deliverables | done | Session 1 review |
 | HU-BAR-015 | Analysis and discussion of project domains | done | Session 1 review |
+| HU-BAR-016 | Trabajo en Pull Request de docs y creación de ramas por integrante | done | Sesión 2 |
 
 ## 2. My individual contribution
-
 - Participated in the first term summary review and validated the required project deliverables.
 - Analyzed the project domains discussed during Session 1 to ensure proper alignment with system requirements.
+- Worked on a Pull Request within the `docs` directory during Session 2.
+- Created an individual child branch for Session 2 activities alongside other team members.
 
 ## 3. Blockers and risks
 
@@ -40,5 +42,5 @@
 - [x] No secrets; config via environment variables
 
 ## 6. Evidence links
-
 - [Session 1 Class Notes (Image)](./Sesion%201-Resumen%20clase.JPG)
+- [Session 2 Class PR (Image)](./Pr%20clase.jpeg)
