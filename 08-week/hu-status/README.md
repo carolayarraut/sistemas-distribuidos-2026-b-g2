@@ -41,4 +41,4 @@
 
 ## 6. Evidence links
 
-- [Session 1 Evidence (Image)](https://github.com/carolayarraut/sistemas-distribuidos-2026-b-g2/blob/main/08-week/hu-status/Ses%C3%B3n%201.jpeg)
+- [Session 1 Evidence](./Sesión%201.jpeg)
