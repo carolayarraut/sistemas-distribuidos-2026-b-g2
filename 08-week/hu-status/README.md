@@ -11,14 +11,16 @@
 ## 1. User stories worked this week
 
 | HU ID | Title | Status (todo/doing/done) | Evidence (PR or commit URL) |
-| ----- | ----- | ----- | ----- |
+| --- | --- | --- | --- |
 | HU-BAR-017 | Software registration standards, repository rules, and manual guidelines | done | Session 1 review |
+| HU-BAR-018 | Documentation update for 07-api folder | done | Pull Request for 07-api |
 
 ## 2. My individual contribution
 
 - Research and investigation regarding the software registration process and its viability as a graduation option.
 - Review of course repository standards and guidelines for proper version control and work history management.
 - Preparation of the work environment while awaiting official manuals and guidelines to be provided by the instructor.
+- Worked in Session 2 on a Pull Request for the `07-api` folder as a contribution to `docs`.
 
 ## 3. Blockers and risks
 
