@@ -5,10 +5,11 @@
 # Weekly Status - Week 09
 
 <!-- CONFIG-START - must match your profile repo (username/username) CONFIG -->
-- FULL_NAME:
-- GITHUB_USER:
-- TEAM:
-- SPRINT_GOAL:
+- FULL_NAME: Carolay Arraut Heredia
+- GITHUB_USER: carolayarraut
+- TEAM: BarberSaaS Team
+- SPRINT_GOAL: 
+
 <!-- CONFIG-END -->
 
 ## 1. User stories worked this week
