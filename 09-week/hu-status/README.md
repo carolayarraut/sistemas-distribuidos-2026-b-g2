@@ -15,7 +15,7 @@
 | HU ID | Title | Status (todo/doing/done) | Evidence (PR or commit URL) |
 |---|---|---|---|
 | HU-BAR-019 | Software registration standards, repository rules, and manual guidelines | done | Session 1 review |
-| HU-BAR-020 | Test-Driven Development (TDD) framework alignment and domain test strategy for BarberSaaS microservices | done | Session 2 review (`presentacion-tdd.html` / `infografia-tdd.png`) |
+| HU-BAR-020 | Test-Driven Development (TDD) framework alignment and domain test strategy for BarberSaaS microservices | done | Session 2 review (`presentacion-tdd.html` ) |
 | HU-BAR-021 | Configuration hardening, secret scanner integration, fail-fast startup validation, and feature flag / canary rollout plan | todo | Planned for next sprint / Session 09-2 |
 
 ## 2. My individual contribution
