@@ -1,0 +1,312 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>TDD en BarberSaaS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a single vertical infographic column, read top to bottom like a test run — cycle, trace, layers, domains, rules, gate. */
+:root {
+  --bg: #F1F2EE;
+  --surface: #FBFBF8;
+  --ink: #15233B;
+  --muted: #4E5A6B;
+  --line: #D6D8D0;
+  --accent: #A85A12;
+  --red: #B83A2B;
+  --green: #2F7A4A;
+  --blue: #2F5DA8;
+  --code-bg: #15233B;
+  --code-fg: #E6EAF0;
+  --code-red: #F2A3A3;
+  --code-green: #9FD8B0;
+  --code-blue: #A9C4EE;
+  --font-display: 'IBM Plex Sans Condensed', 'Arial Narrow', Arial, sans-serif;
+  --font-body: 'IBM Plex Sans', Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F1828; --surface: #172338; --ink: #EEF1F5; --muted: #A9B4C4; --line: #2A3A55;
+    --accent: #E8964A; --red: #E2705F; --green: #5DBB82; --blue: #7AA2E3;
+    --code-bg: #0A111D; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0F1828; --surface: #172338; --ink: #EEF1F5; --muted: #A9B4C4; --line: #2A3A55;
+  --accent: #E8964A; --red: #E2705F; --green: #5DBB82; --blue: #7AA2E3;
+  --code-bg: #0A111D; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: 17px; line-height: 1.55;
+  padding-inline: 20px; padding-block: 48px 64px;
+}
+.page { max-width: 1080px; margin-inline: auto; display: flex; flex-direction: column; gap: 72px; }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+p { margin: 0; }
+.eyebrow { font-size: 13px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+h2 { font-family: var(--font-display); font-size: clamp(30px, 4.4vw, 44px); line-height: 1.08; font-weight: 700; }
+h3 { font-size: 19px; font-weight: 600; }
+.lede { color: var(--muted); max-width: 62ch; }
+.sec { display: flex; flex-direction: column; gap: 28px; }
+.sec-head { display: flex; flex-direction: column; gap: 10px; }
+code, .mono { font-family: var(--font-mono); font-size: .86em; }
+
+/* Hero */
+.hero { display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: end; border-bottom: 2px solid var(--ink); padding-bottom: 40px; }
+.hero h1 { font-family: var(--font-display); font-size: clamp(54px, 9vw, 112px); line-height: .92; font-weight: 700; letter-spacing: -.01em; }
+.hero h1 span { color: var(--accent); }
+.hero .lede { font-size: 19px; margin-top: 18px; }
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.stat { background: var(--surface); padding: 18px 20px; display: flex; flex-direction: column; gap: 2px; }
+.stat b { font-family: var(--font-display); font-size: 40px; line-height: 1; font-variant-numeric: tabular-nums; }
+.stat small { color: var(--muted); font-size: 14px; }
+
+/* Cycle */
+.cycle { display: grid; grid-template-columns: minmax(0, 360px) 1fr; gap: 48px; align-items: center; }
+.cycle svg { width: 100%; max-width: 360px; height: auto; display: block; margin-inline: auto; }
+.svg-ink { fill: var(--ink); }
+.svg-muted { fill: var(--muted); }
+.steps { display: flex; flex-direction: column; gap: 0; }
+.step { display: grid; grid-template-columns: 64px 1fr; gap: 18px; padding: 20px 0; border-top: 1px solid var(--line); }
+.step:last-child { border-bottom: 1px solid var(--line); }
+.step .tag { font-family: var(--font-display); font-weight: 700; font-size: 34px; line-height: 1; }
+.step p { color: var(--muted); }
+.t-red { color: var(--red); } .t-green { color: var(--green); } .t-blue { color: var(--blue); }
+
+/* Trace chain */
+.chain { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; counter-reset: c; }
+.node { position: relative; padding: 22px 20px 22px 0; display: flex; flex-direction: column; gap: 8px; border-top: 6px solid var(--ink); }
+.node:not(:last-child)::after { content: "→"; position: absolute; right: 8px; top: 14px; font-size: 22px; color: var(--accent); }
+.node .k { font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.node h3 { font-size: 18px; }
+.node p { font-size: 15px; color: var(--muted); }
+.node code { color: var(--ink); word-break: break-word; }
+.node.hl { border-top-color: var(--accent); }
+
+/* Layers */
+.layers { display: grid; grid-template-columns: minmax(0, 400px) 1fr; gap: 48px; align-items: center; }
+.layers svg { width: 100%; max-width: 400px; height: auto; display: block; margin-inline: auto; }
+.hex-1 { fill: var(--surface); stroke: var(--line); stroke-width: 2; }
+.hex-2 { fill: var(--bg); stroke: var(--line); stroke-width: 2; }
+.hex-3 { fill: var(--ink); }
+.hex-core { fill: var(--bg); }
+.pyramid { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.tier { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; padding: 12px 18px; background: var(--surface); border: 1px solid var(--line); font-size: 15px; min-width: 0; }
+.tier b { font-weight: 600; }
+.tier span { color: var(--muted); font-size: 14px; text-align: right; }
+.tier.t1 { width: 52%; } .tier.t2 { width: 68%; } .tier.t3 { width: 84%; } .tier.t4 { width: 100%; background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.tier.t4 span { color: var(--bg); opacity: .8; }
+.pyr-note { font-size: 14px; color: var(--muted); text-align: center; }
+
+/* Domains */
+.domains { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.dom { background: var(--surface); padding: 22px 20px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.dom .n { font-family: var(--font-mono); font-size: 12px; color: var(--accent); }
+.dom h3 { font-family: var(--font-mono); font-size: 16px; font-weight: 600; word-break: break-word; }
+.dom p { font-size: 14px; color: var(--muted); }
+.dom .test { margin-top: auto; font-family: var(--font-mono); font-size: 12.5px; background: var(--code-bg); color: var(--code-red); padding: 10px 12px; word-break: break-word; line-height: 1.45; }
+.dom.core { box-shadow: inset 0 4px 0 var(--accent); }
+.foot-note { font-size: 14px; color: var(--muted); }
+
+/* Rules */
+.rules { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+.rule { display: flex; flex-direction: column; gap: 10px; padding-top: 16px; border-top: 2px solid var(--ink); }
+.rule .num { font-family: var(--font-display); font-size: 48px; font-weight: 700; line-height: 1; color: var(--accent); }
+.rule p { color: var(--muted); font-size: 15.5px; }
+
+/* Git + CI */
+.gate { display: grid; grid-template-columns: 1.1fr 1fr; gap: 32px; align-items: stretch; }
+.term { background: var(--code-bg); color: var(--code-fg); font-family: var(--font-mono); font-size: 14.5px; padding: 24px; display: flex; flex-direction: column; gap: 10px; overflow-x: auto; min-width: 0; }
+.term .ln { white-space: nowrap; }
+.term .h { color: #8C9AB0; }
+.c-red { color: var(--code-red); } .c-green { color: var(--code-green); } .c-blue { color: var(--code-blue); }
+.flow { display: flex; flex-direction: column; gap: 10px; }
+.box { border: 1px solid var(--line); background: var(--surface); padding: 14px 18px; display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+.box b { font-weight: 600; }
+.box small { color: var(--muted); font-size: 14px; }
+.arrow { text-align: center; color: var(--accent); font-size: 18px; line-height: 1; }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.ok { border-color: var(--green); }
+.ok b { color: var(--green); }
+.ko { border-color: var(--red); }
+.ko b { color: var(--red); }
+
+/* Closing */
+.closing { border-top: 2px solid var(--ink); padding-top: 32px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; align-items: baseline; }
+.closing p:first-child { font-family: var(--font-display); font-size: clamp(26px, 3.6vw, 38px); font-weight: 700; line-height: 1.1; max-width: 22ch; }
+.closing p:last-child { color: var(--muted); font-size: 14px; }
+
+@media (max-width: 860px) {
+  .hero, .cycle, .layers, .gate { grid-template-columns: 1fr; }
+  .domains { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .chain { grid-template-columns: 1fr; }
+  .node { padding-right: 0; border-top-width: 0; border-left: 6px solid var(--ink); padding-left: 18px; }
+  .node.hl { border-left-color: var(--accent); }
+  .node:not(:last-child)::after { content: "↓"; right: auto; left: 18px; top: auto; bottom: -14px; }
+  .rules { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) {
+  .domains { grid-template-columns: 1fr; }
+  .split { grid-template-columns: 1fr; }
+  .tier.t1, .tier.t2, .tier.t3 { width: 100%; }
+  .tier { flex-direction: column; gap: 2px; }
+  .tier span { text-align: left; }
+}
+</style>
+
+<main class="page">
+
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Sistemas Distribuidos · CORHUILA 2026-B</p>
+      <h1>TDD en<br><span>BarberSaaS</span></h1>
+      <p class="lede">Test-Driven Development: primero escribimos la prueba que describe el comportamiento y después el código que la hace pasar. En los 8 dominios y los 29 repos.</p>
+    </div>
+    <div class="stats" aria-label="Cifras del alcance">
+      <div class="stat"><b>8</b><small>dominios con TDD</small></div>
+      <div class="stat"><b>29</b><small>repos con pruebas en CI</small></div>
+      <div class="stat"><b>3</b><small>pasos por ciclo</small></div>
+      <div class="stat"><b>0</b><small>merges con pruebas en rojo</small></div>
+    </div>
+  </header>
+
+  <section class="sec" aria-labelledby="s-ciclo">
+    <div class="sec-head">
+      <p class="eyebrow">01 · El ciclo</p>
+      <h2 id="s-ciclo">Rojo, verde, refactor. Y otra vez.</h2>
+    </div>
+    <div class="cycle">
+      <svg viewBox="0 0 360 360" role="img" aria-label="Ciclo TDD: rojo, verde, refactor, en sentido horario">
+        <defs>
+          <marker id="mr" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill: var(--red)"/></marker>
+          <marker id="mg" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill: var(--green)"/></marker>
+          <marker id="mb" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill: var(--blue)"/></marker>
+        </defs>
+        <path d="M191.3 50.5 A130 130 0 0 1 297.8 234.9" fill="none" style="stroke: var(--red)" stroke-width="22" marker-end="url(#mr)"/>
+        <path d="M286.5 254.6 A130 130 0 0 1 73.5 254.6" fill="none" style="stroke: var(--green)" stroke-width="22" marker-end="url(#mg)"/>
+        <path d="M62.2 234.9 A130 130 0 0 1 168.7 50.5" fill="none" style="stroke: var(--blue)" stroke-width="22" marker-end="url(#mb)"/>
+        <text x="300" y="112" text-anchor="middle" font-family="IBM Plex Sans Condensed, Arial Narrow, sans-serif" font-weight="700" font-size="20" style="fill: var(--red)">ROJO</text>
+        <text x="180" y="346" text-anchor="middle" font-family="IBM Plex Sans Condensed, Arial Narrow, sans-serif" font-weight="700" font-size="20" style="fill: var(--green)">VERDE</text>
+        <text x="52" y="112" text-anchor="middle" font-family="IBM Plex Sans Condensed, Arial Narrow, sans-serif" font-weight="700" font-size="20" style="fill: var(--blue)">REFACTOR</text>
+        <text x="180" y="172" text-anchor="middle" font-family="IBM Plex Sans Condensed, Arial Narrow, sans-serif" font-weight="700" font-size="40" class="svg-ink">minutos</text>
+        <text x="180" y="200" text-anchor="middle" font-family="IBM Plex Sans, Arial, sans-serif" font-size="14" class="svg-muted">por vuelta del ciclo</text>
+      </svg>
+      <div class="steps">
+        <div class="step"><span class="tag t-red">1</span><div><h3 class="t-red">Rojo: escribo la prueba</h3><p>Describe un comportamiento que todavía no existe. Se ejecuta y falla, lo que demuestra que la prueba sirve.</p></div></div>
+        <div class="step"><span class="tag t-green">2</span><div><h3 class="t-green">Verde: código mínimo</h3><p>Escribo lo justo para que la prueba pase. Nada de funcionalidades “por si acaso”.</p></div></div>
+        <div class="step"><span class="tag t-blue">3</span><div><h3 class="t-blue">Refactor: limpio</h3><p>Mejoro nombres y estructura sin cambiar el comportamiento. Las pruebas avisan si algo se rompe.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="s-traza">
+    <div class="sec-head">
+      <p class="eyebrow">02 · Trazabilidad (P.1)</p>
+      <h2 id="s-traza">De la historia de usuario al merge</h2>
+      <p class="lede">Cada criterio de aceptación se convierte en una prueba. La cadena queda escrita en el código y en Git.</p>
+    </div>
+    <div class="chain">
+      <div class="node"><span class="k">04-requirements</span><h3>Historia de usuario</h3><p>“Un cliente no puede reservar un horario ya ocupado”</p></div>
+      <div class="node hl"><span class="k">Rojo</span><h3>Prueba</h3><p><code>reservarHorarioOcupado_ debeRechazar()</code></p></div>
+      <div class="node"><span class="k">Verde</span><h3>Código</h3><p><code>Agenda.reservar()</code> valida el solapamiento</p></div>
+      <div class="node"><span class="k">Pull Request</span><h3>Referencia la HU</h3><p><code>barber-saas-docs#NN</code></p></div>
+      <div class="node"><span class="k">ci.yml</span><h3>CI en verde</h3><p>Solo entonces se permite el merge</p></div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="s-capas">
+    <div class="sec-head">
+      <p class="eyebrow">03 · Arquitectura hexagonal</p>
+      <h2 id="s-capas">Dónde vive cada prueba en un -api</h2>
+      <p class="lede">TDD de adentro hacia afuera. El dominio está aislado, así que se prueba sin base de datos ni framework: ahí ocurre la mayoría de los ciclos.</p>
+    </div>
+    <div class="layers">
+      <svg viewBox="0 0 400 400" role="img" aria-label="Hexágono de capas: dominio al centro, casos de uso alrededor, adaptadores afuera">
+        <polygon class="hex-1" points="200,20 355.9,110 355.9,290 200,380 44.1,290 44.1,110"/>
+        <polygon class="hex-2" points="200,78 305.7,139 305.7,261 200,322 94.3,261 94.3,139"/>
+        <polygon class="hex-3" points="200,138 253.7,169 253.7,231 200,262 146.3,231 146.3,169"/>
+        <text x="200" y="198" text-anchor="middle" font-family="IBM Plex Sans Condensed, Arial Narrow, sans-serif" font-weight="700" font-size="21" class="hex-core">Dominio</text>
+        <text x="200" y="218" text-anchor="middle" font-family="IBM Plex Sans, Arial, sans-serif" font-size="12" class="hex-core">unitarias puras</text>
+        <text x="200" y="106" text-anchor="middle" font-family="IBM Plex Sans Condensed, Arial Narrow, sans-serif" font-weight="700" font-size="17" class="svg-ink">Casos de uso</text>
+        <text x="200" y="124" text-anchor="middle" font-family="IBM Plex Sans, Arial, sans-serif" font-size="12" class="svg-muted">unitarias con mocks</text>
+        <text x="200" y="50" text-anchor="middle" font-family="IBM Plex Sans Condensed, Arial Narrow, sans-serif" font-weight="700" font-size="17" class="svg-ink">Adaptadores</text>
+        <text x="200" y="67" text-anchor="middle" font-family="IBM Plex Sans, Arial, sans-serif" font-size="12" class="svg-muted">REST · persistencia · clientes HTTP</text>
+        <text x="200" y="348" text-anchor="middle" font-family="IBM Plex Sans, Arial, sans-serif" font-size="12" class="svg-muted">contrato (07-api) + integración (-db)</text>
+      </svg>
+      <div class="pyramid" aria-label="Pirámide de pruebas, de pocas a muchas">
+        <div class="tier t1"><b>Integración</b><span>repositorio contra el esquema del -db</span></div>
+        <div class="tier t2"><b>Contrato</b><span>REST cumple el OpenAPI de 07-api</span></div>
+        <div class="tier t3"><b>Casos de uso</b><span>orquestación con puertos simulados</span></div>
+        <div class="tier t4"><b>Dominio</b><span>reglas de negocio · la mayoría</span></div>
+        <p class="pyr-note">Menos pruebas arriba (más lentas), muchas abajo (rápidas).</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="s-dom">
+    <div class="sec-head">
+      <p class="eyebrow">04 · Alcance</p>
+      <h2 id="s-dom">Los 8 dominios, cada uno con su primera prueba</h2>
+      <p class="lede">TDD aplica en todos: cada dominio convierte los criterios de sus HU en pruebas en su <code>-api</code>, y donde exista, en su <code>-worker</code> o <code>-workflow</code>.</p>
+    </div>
+    <div class="domains">
+      <div class="dom"><span class="n">01</span><h3>identity-auth</h3><p>Usuarios, sesiones, roles</p><div class="test">loginConClaveIncorrecta_ debeRechazar()</div></div>
+      <div class="dom"><span class="n">02</span><h3>barbershop</h3><p>Barberías, sedes, servicios</p><div class="test">crearServicioSinPrecio_ debeFallar()</div></div>
+      <div class="dom core"><span class="n">03 · core</span><h3>appointment</h3><p>Reservas y estados de la cita</p><div class="test">reservarHorarioOcupado_ debeRechazar()</div></div>
+      <div class="dom"><span class="n">04</span><h3>schedule</h3><p>Agenda y disponibilidad</p><div class="test">turnoFueraDeHorario_ noEstaDisponible()</div></div>
+      <div class="dom core"><span class="n">05 · core</span><h3>loyalty</h3><p>Puntos y recompensas</p><div class="test">citaCompletada_ sumaPuntos()</div></div>
+      <div class="dom"><span class="n">06</span><h3>notifications</h3><p>Avisos por eventos</p><div class="test">eventoRepetido_ noEnviaDosVeces()</div></div>
+      <div class="dom"><span class="n">07</span><h3>finance-inventory</h3><p>Pagos y existencias</p><div class="test">ventaSinStock_ debeRechazar()</div></div>
+      <div class="dom"><span class="n">08</span><h3>platform-admin</h3><p>Administración de la plataforma</p><div class="test">tenantSuspendido_ bloqueaAcceso()</div></div>
+    </div>
+    <p class="foot-note">Los nombres de prueba son ejemplos ilustrativos. Los reales salen de los criterios de aceptación de cada HU.</p>
+  </section>
+
+  <section class="sec" aria-labelledby="s-reglas">
+    <div class="sec-head">
+      <p class="eyebrow">05 · Norma 2026-B</p>
+      <h2 id="s-reglas">Las pruebas también respetan la arquitectura</h2>
+    </div>
+    <div class="rules">
+      <div class="rule"><span class="num">R7</span><h3>El esquema vive en el -db</h3><p>Las pruebas de integración usan las migraciones del <code>-db</code>. El <code>-api</code> nunca crea tablas propias.</p></div>
+      <div class="rule"><span class="num">R8</span><h3>Cada dominio, su propia base</h3><p>Si <code>appointment</code> necesita datos de otro dominio, la prueba simula su API. Nunca consulta su base.</p></div>
+      <div class="rule"><span class="num">07</span><h3>Contratos verificados</h3><p>Las pruebas de contrato garantizan que esos simulacros coinciden con el OpenAPI publicado en <code>07-api</code>.</p></div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="s-ci">
+    <div class="sec-head">
+      <p class="eyebrow">06 · Git y CI</p>
+      <h2 id="s-ci">El ciclo queda registrado y la CI lo vigila</h2>
+    </div>
+    <div class="gate">
+      <div class="term" aria-label="Historial de commits de una rama">
+        <span class="ln h">$ git log --oneline</span>
+        <span class="ln c-blue">c3f9a1e refactor: extraer objeto Horario</span>
+        <span class="ln c-green">8b2d47c feat: validar solapamiento en Agenda.reservar</span>
+        <span class="ln c-red">41e0d9a test: reserva rechaza horario ocupado</span>
+        <span class="ln h"># historial de ejemplo</span>
+      </div>
+      <div class="flow" aria-label="Flujo del PR por la CI">
+        <div class="box"><b>Pull Request</b><small>referencia la HU</small></div>
+        <div class="arrow" aria-hidden="true">↓</div>
+        <div class="box"><b>ci.yml</b><small>compila y corre las pruebas</small></div>
+        <div class="arrow" aria-hidden="true">↓</div>
+        <div class="split">
+          <div class="box ok"><b>Verde</b><small>se puede fusionar</small></div>
+          <div class="box ko"><b>Rojo</b><small>merge bloqueado</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="closing">
+    <p>Si no hay una prueba que falle, no hay código que escribir.</p>
+    <p>Carlos Leal · BarberSaaS · Sistemas Distribuidos 2026-B</p>
+  </footer>
+
+</main>
+
+</body></html>
