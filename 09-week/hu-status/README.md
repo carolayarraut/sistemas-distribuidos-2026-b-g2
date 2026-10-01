@@ -42,4 +42,4 @@
 - [x] No secrets; config via environment variables
 
 ## 6. Evidence links
-- **Session 2 TDD Resources:** `TDD en BarberSaaS.html` and `TDD en BarberSaaS.pdf`.
+- **Session 2 TDD Resources:** [TDD en BarberSaaS.html](./TDD%20en%20BarberSaaS.html) and [TDD en BarberSaaS.pdf](./TDD%20en%20BarberSaaS.pdf).
