@@ -21,7 +21,7 @@
 ## 2. My individual contribution
 - **Documentation Draft (Superseded):** Worked on an initial contribution for documentation updates. It was set aside as closing the tracker required specific technical data from teammates (ADR-004 polyrepo definitions and OpenAPI 3.1 specs). Yielded the documentation scope to avoid conflicts and inconsistencies.
 
-- **Session 2 (TDD Workshop):** Work was done on the TDD strategy. Reviewed how the Red-Green-Refactor cycle applies to the 8 BarberSaaS domains and how unit tests, mocks, and contract tests fit into our hexagonal architecture.
+- **Session 2 (TDD Workshop):** Work was done on the TDD strategy. Reviewed how the Red-Green-Refactor cycle applies to the 8 BarberSaaS domains and how unit tests, mocks, and contract tests fit into our hexagonal architecture.Note that the documents were prepared by teammate Carlos Leal
 
 ## 3. Blockers and risks
 - **Work Discarded/Superseded:** Initial documentation work could not be used due to dependencies on core API and architecture definitions that were shifting.
