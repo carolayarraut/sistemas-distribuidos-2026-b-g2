@@ -5,5 +5,5 @@
 - TEAM: BarberSaaS
 - DOCS_REPO: https://github.com/code-corhuila/barber-saas-docs
 - REFLECTION_DOC: https://docs.google.com/document/d/1O1TEB7jon4iaYd4ocodqthHXLdHdN3kpw9SBna8HdUU/edit?usp=sharing
-- JOURNEY: (written in CP1)
+- JOURNEY: Password reset request (POST /api/v1/auth/password-reset) - api-gateway, identity-auth-api, barber-saas-worker, notifications-api
 <!-- CONFIG-END -->
