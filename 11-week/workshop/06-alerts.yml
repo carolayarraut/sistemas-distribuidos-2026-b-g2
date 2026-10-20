@@ -1,0 +1,58 @@
+# Burn-rate alerts for SLO 1 of 05-slo.md: availability of POST /api/v1/auth/password-reset,
+# 99.5 % in 30 days, so the error budget is 0.005 (0.5 %).
+# Multi-window: the long window proves the burn is real, the short one proves it is still happening.
+groups:
+  - name: identity-password-reset-sli
+    rules:
+      - record: identity:password_reset_error_ratio:rate5m
+        expr: |
+          sum(rate(identity_http_requests_total{route="/api/v1/auth/password-reset",status_class="5xx"}[5m]))
+          /
+          sum(rate(identity_http_requests_total{route="/api/v1/auth/password-reset"}[5m]))
+      - record: identity:password_reset_error_ratio:rate30m
+        expr: |
+          sum(rate(identity_http_requests_total{route="/api/v1/auth/password-reset",status_class="5xx"}[30m]))
+          /
+          sum(rate(identity_http_requests_total{route="/api/v1/auth/password-reset"}[30m]))
+      - record: identity:password_reset_error_ratio:rate1h
+        expr: |
+          sum(rate(identity_http_requests_total{route="/api/v1/auth/password-reset",status_class="5xx"}[1h]))
+          /
+          sum(rate(identity_http_requests_total{route="/api/v1/auth/password-reset"}[1h]))
+      - record: identity:password_reset_error_ratio:rate6h
+        expr: |
+          sum(rate(identity_http_requests_total{route="/api/v1/auth/password-reset",status_class="5xx"}[6h]))
+          /
+          sum(rate(identity_http_requests_total{route="/api/v1/auth/password-reset"}[6h]))
+
+  - name: identity-password-reset-slo-alerts
+    rules:
+      - alert: PasswordResetAvailabilityFastBurn
+        expr: |
+          identity:password_reset_error_ratio:rate1h > (14.4 * 0.005)
+          and
+          identity:password_reset_error_ratio:rate5m > (14.4 * 0.005)
+        labels:
+          severity: page
+          team: barbersaas
+          service: identity-auth-api
+          slo: password-reset-availability
+        annotations:
+          summary: "Password reset requests are failing fast: 2 % of the 30-day error budget burned in 1 hour"
+          description: "More than 7.2 % of POST /api/v1/auth/password-reset answered 5xx in the last hour and in the last 5 minutes. Users cannot get a reset code."
+          runbook_url: "https://github.com/carolayarraut/sistemas-distribuidos-2026-b-g2/blob/main/11-week/workshop/07-runbook.md"
+
+      - alert: PasswordResetAvailabilitySlowBurn
+        expr: |
+          identity:password_reset_error_ratio:rate6h > (6 * 0.005)
+          and
+          identity:password_reset_error_ratio:rate30m > (6 * 0.005)
+        labels:
+          severity: ticket
+          team: barbersaas
+          service: identity-auth-api
+          slo: password-reset-availability
+        annotations:
+          summary: "Password reset requests keep failing: 5 % of the 30-day error budget burned in 6 hours"
+          description: "More than 3 % of POST /api/v1/auth/password-reset answered 5xx in the last 6 hours and in the last 30 minutes."
+          runbook_url: "https://github.com/carolayarraut/sistemas-distribuidos-2026-b-g2/blob/main/11-week/workshop/07-runbook.md"
