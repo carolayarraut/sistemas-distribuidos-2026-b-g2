@@ -1,0 +1,68 @@
+# Security gates for barber-saas-identity-auth-api (api-gateway -> identity-auth-api, issue #151).
+# Proposal to copy as .github/workflows/security.yml in that repository, next to ci.yml.
+# One job, three gates in a row: if a secret is found, the slower gates do not run.
+# Stories: barber-saas-docs #166 (E), #167 (I), #168 (R). STRIDE: PR #162.
+name: identity-auth security
+
+on:
+  pull_request:
+    branches: [develop, qa, main]
+    paths-ignore: ['**.md']
+
+permissions:
+  contents: read
+
+jobs:
+  gates:
+    name: secrets, dependencies, authorization
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Get the code with its history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Gate 1: no JWT_PRIVATE_KEY, SMTP password or .env value may enter the repository.
+      - name: Gate 1 - secret scan (gitleaks, only the commits of this pull request)
+        run: |
+          docker run --rm -v "$PWD:/src" -w /src ghcr.io/gitleaks/gitleaks:v8.21.2 \
+            git --redact --exit-code 1 \
+            --log-opts="${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}"
+
+      - name: Java 21 for the Maven gates
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Keep the vulnerability database between runs
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository/org/owasp/dependency-check-data
+          key: nvd-${{ runner.os }}-${{ github.run_id }}
+          restore-keys: nvd-${{ runner.os }}-
+
+      # Gate 2: Spring Boot, jjwt, the PostgreSQL driver and BCrypt with a known CVE of 7.0 or more stop the PR.
+      - name: Gate 2 - dependency audit (OWASP dependency-check)
+        env:
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+        run: >
+          mvn -B -ntp org.owasp:dependency-check-maven:11.1.1:aggregate
+          -DfailBuildOnCVSS=7 -DnvdApiKey="$NVD_API_KEY" -Dformat=HTML
+
+      # Gate 3: the requests that must fail on POST /api/v1/auth/barbers (story #166).
+      - name: Gate 3 - negative authorization tests
+        run: >
+          mvn -B -ntp -pl identity-auth-app -am test
+          -Dtest='CreateBarberAuthorizationTest,BarberAccountsHttpTest'
+          -Dsurefire.failIfNoSpecifiedTests=false
+
+      - name: Keep the dependency report when a gate fails
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-check-report
+          path: target/dependency-check-report.html
+          if-no-files-found: ignore
