@@ -10,4 +10,5 @@
 - REFLECTION_DOC: https://docs.google.com/document/d/1tzMX0GS2tkiVWxS3hQO_o9DJGQ7RqmXCDz_-gf-36eQ/edit?usp=sharing
 - LIBRARY_BOOK: Daltabuit Godás, E.; Hernández Audelo, L.; Mallén Fullerton, G.; Vázquez Gómez, J. J. La seguridad de la información. 1st ed. Limusa / Grupo Noriega Editores, 2007. Call number 005.8 D147 Ej.1
 - LIBRARY_RECORD_TIME: 2026-10-29 08:30
+- STORIES: https://github.com/code-corhuila/barber-saas-docs/issues/166, https://github.com/code-corhuila/barber-saas-docs/issues/167, https://github.com/code-corhuila/barber-saas-docs/issues/168
 <!-- CONFIG-END -->
