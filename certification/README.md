@@ -1,27 +1,26 @@
-# Certification C3 — <Full name>
-
-> Template of the corte 3 certification. Replace every `<...>` with your data and delete this note. The rules are in the guide attached to the c3-certification activity in Moodle. Text left as `<...>` counts as missing.
+# Certification C3 — Carolay Arraut Heredia
 
 ## Cover
 
 | Field | Value |
 |---|---|
-| Full name | <Full name exactly as in Moodle> |
-| GitHub user | <github-user> |
-| Group | <G1 or G2> |
-| Team | <Team name> |
-| Team -docs repository | <https://github.com/code-corhuila/...-docs> |
-| Course | <Exact course name> |
-| Course link | <Course URL> |
-| Start date | <YYYY-MM-DD> |
+| Full name | Carolay Arraut Heredia |
+| GitHub user | carolayarraut |
+| Group | G2 |
+| Team | BarberSaaS |
+| Team -docs repository | https://github.com/code-corhuila/barber-saas-docs |
+| Course | HCCDP-Solution Architectures Course |
+| Course link | https://e.huawei.com/en/talent/ict-academy/#/ict-courses-detail?courseId=6WtKiPd1S1YelBB0AUbE1vXlPgk |
+| Start date | 2026-11-03 |
 | Completion date | <YYYY-MM-DD> |
 
 ## Study log
 
 | Date | Hours | Chapters or labs | Evidence file |
 |---|---|---|---|
-| <YYYY-MM-DD> | <h> | <Chapters or labs> | <evidence/NN-....png> |
-| Total | <sum> | | |
+| 2026-11-03 | 1 | Pre-class Guidance, Chapter 1 | evidence/01-chapter-01.png |
+| 2026-11-04 | 1.5 | Chapters 2 and 3 | evidence/02-chapter-02.png, evidence/03-chapter-03.png |
+| Total | 2.5 | | |
 
 ## Labs
 
