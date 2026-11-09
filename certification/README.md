@@ -20,7 +20,11 @@
 |---|---|---|---|
 | 2026-11-03 | 1 | Pre-class Guidance, Chapter 1 | evidence/01-chapter-01.png |
 | 2026-11-04 | 1.5 | Chapters 2 and 3 | evidence/02-chapter-02.png, evidence/03-chapter-03.png |
-| Total | 2.5 | | |
+| 2026-11-05 | 3.25 | Review of chapters 1 to 3, Chapter 4 | evidence/03-chapter-03.png, evidence/04-chapter-04.png |
+| 2026-11-06 | 2 | Chapter 4, Chapter 5 | evidence/04-chapter-04.png, evidence/05-chapter-05.png |
+| 2026-11-07 | 3.25 | Review and completion of Chapter 5 | evidence/05-chapter-05.png |
+| 2026-11-08 | 3.75 | Chapter 6 | evidence/06-chapter-06.png |
+| Total | 14.75 | | |
 
 ## Labs
 
