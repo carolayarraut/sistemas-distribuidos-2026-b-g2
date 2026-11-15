@@ -30,7 +30,8 @@
 | 2026-11-12 | 3.5 | Chapter 13, review of chapters 1, 10 and 11 | evidence/13-chapter-13.png |
 | 2026-11-13 | 4.75 | Lab 2, Chapter 14, review for the final exam | evidence/16-lab-2.png, evidence/14-chapter-14.png |
 | 2026-11-14 | 1.75 | Review, final exam, Lab 3 | evidence/19-final-exam.png, evidence/17-lab-3.png |
-| Total | 41.5 | | |
+| 2026-11-15 | 1.25 | Lab 4 | evidence/18-lab-4.png |
+| Total | 42.75 | | |
 
 ## Labs
 
@@ -39,7 +40,7 @@
 | evidence/15-lab-1.png | Design Cases and Practices of an O&M Solution | I connected Discuz! to an RDS for MySQL primary/standby instance, set a Cloud Eye event alarm that emails me through SMN when the ECS restarts, and collected /var/log/messages in LTS with a keyword alarm on "Stopped". | The ICAgent installer printed "param is empty" because it did not receive the SK; I wrote the AK/SK into the install script with sed, ran it again and the agent changed to Running. |
 | evidence/16-lab-2.png | Highly Reliable Database Solution | I ran Discuz! on an RDS for MySQL primary/standby instance, kept a second instance in sync with DRS (full plus incremental), added a read replica and connected a DCS for Redis master/standby cache to Discuz!. | SSH to ecs-web returned "Permission denied"; I reset the ECS password from the console, restarted the server and could log in to install the Redis extension. |
 | evidence/17-lab-3.png | Highly Elastic Service System | I put Discuz! behind a shared ELB and an Auto Scaling group of 1 to 5 instances built from a private image of the web server, with a policy that adds one instance when CPU stays above 70 %. | The AS group could not find the ELB backend server group because the listener had not been submitted; I created the listener again, confirmed it, and the group appeared. |
-| evidence/18-lab-4.png | <Lab name> | <One sentence> | <One sentence> |
+| evidence/18-lab-4.png | High-Performance Network Solution | I published Discuz! to the Internet through a public NAT Gateway with SNAT and DNAT rules, connected an O&M VPC with a jump server to the service VPC with VPC peering and routes, and added a private DNS zone so the jump server reaches the web server as www.abc.com. | The Discuz! installer returned "Access denied for user 'root'"; I reset the RDS root password and saw that going back one step put the default value "root" in the password field again, so I typed the new password there and the installation continued. |
 
 ## Final exam
 
@@ -51,4 +52,10 @@
 
 ## Skills summary
 
-<5 to 7 lines in English, first person, naming at least three concrete design techniques from the course.>
+In this course I learned to turn a fragile architecture into a robust one with dynamic horizontal scaling, using Auto Scaling groups behind an ELB to add servers automatically when the demand grows.
+I applied Multi-AZ high availability, spreading resources over several zones with RDS for PostgreSQL (primary/standby) and a DDS for MongoDB replica set to remove single points of failure.
+Another key technique was network isolation with bastion access: I removed the public IPs of the servers with a NAT Gateway and a jump server in a management VPC connected with VPC peering.
+I added proactive observability with Cloud Eye, LTS and SMN to watch metrics and logs and to send alarms.
+I designed disaster recovery strategies driven by RTO and RPO and chose the pattern that meets them.
+I applied all of this to BarberSaaS, redesigning a platform that runs on one exposed virtual machine into a distributed one that scales by itself.
+The new design protects internal access and keeps the appointment notifications working even if a zone fails.
