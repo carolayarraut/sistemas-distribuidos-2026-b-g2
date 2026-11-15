@@ -12,7 +12,7 @@
 | Course | HCCDP-Solution Architectures Course |
 | Course link | https://e.huawei.com/en/talent/ict-academy/#/ict-courses-detail?courseId=6WtKiPd1S1YelBB0AUbE1vXlPgk |
 | Start date | 2026-11-03 |
-| Completion date | <YYYY-MM-DD> |
+| Completion date | 2026-11-14 |
 
 ## Study log
 
@@ -28,22 +28,26 @@
 | 2026-11-10 | 5.5 | Chapters 9 and 10 | evidence/09-chapter-09.png, evidence/10-chapter-10.png |
 | 2026-11-11 | 5.25 | Chapters 11 and 12, Lab 1 | evidence/11-chapter-11.png, evidence/12-chapter-12.png, evidence/15-lab-1.png |
 | 2026-11-12 | 3.5 | Chapter 13, review of chapters 1, 10 and 11 | evidence/13-chapter-13.png |
-| Total | 35 | | |
+| 2026-11-13 | 4.75 | Lab 2, Chapter 14, review for the final exam | evidence/16-lab-2.png, evidence/14-chapter-14.png |
+| 2026-11-14 | 1.75 | Review, final exam, Lab 3 | evidence/19-final-exam.png, evidence/17-lab-3.png |
+| Total | 41.5 | | |
 
 ## Labs
 
 | Evidence file | Lab name | What I built | What failed first and how I fixed it |
 |---|---|---|---|
 | evidence/15-lab-1.png | Design Cases and Practices of an O&M Solution | I connected Discuz! to an RDS for MySQL primary/standby instance, set a Cloud Eye event alarm that emails me through SMN when the ECS restarts, and collected /var/log/messages in LTS with a keyword alarm on "Stopped". | The ICAgent installer printed "param is empty" because it did not receive the SK; I wrote the AK/SK into the install script with sed, ran it again and the agent changed to Running. |
-| evidence/16-lab-2.png | <Lab name> | <One sentence> | <One sentence> |
-| evidence/17-lab-3.png | <Lab name> | <One sentence> | <One sentence> |
+| evidence/16-lab-2.png | Highly Reliable Database Solution | I ran Discuz! on an RDS for MySQL primary/standby instance, kept a second instance in sync with DRS (full plus incremental), added a read replica and connected a DCS for Redis master/standby cache to Discuz!. | SSH to ecs-web returned "Permission denied"; I reset the ECS password from the console, restarted the server and could log in to install the Redis extension. |
+| evidence/17-lab-3.png | Highly Elastic Service System | I put Discuz! behind a shared ELB and an Auto Scaling group of 1 to 5 instances built from a private image of the web server, with a policy that adds one instance when CPU stays above 70 %. | The AS group could not find the ELB backend server group because the listener had not been submitted; I created the listener again, confirmed it, and the group appeared. |
 | evidence/18-lab-4.png | <Lab name> | <One sentence> | <One sentence> |
 
 ## Final exam
 
-- Score: <score>
-- Date: <YYYY-MM-DD>
+- Score: 81 / 100, passed (passing score 70); 25 of 30 closed-ended questions correct, in 21 min 6 s of the 90 allowed. Second attempt of the 10 the course allows.
+- Exam: "HCCDP-Solution Architectures Course Mock Exam"
+- Date: 2026-11-14
 - Evidence: evidence/19-final-exam.png
+- Certificate of completion: Huawei ICT Academy, "HCCDP-Solution Architectures Course", issued to Carolay Arraut Heredia, code ICT20261115000027; the issue date printed is 2026-11-15 because Huawei uses China time (UTC+8). File: certificate.pdf (the PDF holds the PNG image from Huawei Talent unchanged).
 
 ## Skills summary
 
